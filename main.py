@@ -8,6 +8,9 @@ from flask import Flask, request, Response
 from webargs import fields, validate
 from webargs.flaskparser import use_kwargs
 
+from database_handler import execute_query
+from formatter import format_records
+
 app = Flask(__name__)
 
 
@@ -93,6 +96,13 @@ def get_astronauts():
 @app.route("/calculate-average")
 def calculate_average():
     ...
+
+
+@app.route("/get-customers")
+def get_customers():
+    query = 'SELECT FirstName, LastName FROM customers'
+    result = execute_query(query=query)
+    return format_records(result)
 
 
 if __name__ == '__main__':
